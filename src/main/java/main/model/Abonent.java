@@ -1,18 +1,21 @@
 package main.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
 
+import java.math.BigInteger;
 import java.sql.Time;
 import java.util.Random;
 @Entity
 @Table(name = "abonent")
+@Data
 public class Abonent {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+            @Column(name = "id")
     int id;
-    long number;
+    @Column(name = "number")
+    String number;
 
 
     public long getNumber() {
