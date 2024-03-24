@@ -3,11 +3,15 @@ package main;
 import main.model.Call;
 import main.model.CallType;
 import main.model.Subscriber;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Generator {
-    private final long maxCallTime = 500000;
+    private final long MAXCALLTIME = 500000;
+    private final int MAXNUMOFCALLS = 10000;
     public  List<Subscriber> generateSubscriberList(int numOfSubscribers){
         List<Subscriber> subscriberList = new ArrayList<>();
         for(int i = 0; i < numOfSubscribers; i++){
@@ -17,14 +21,14 @@ public class Generator {
         return subscriberList;
     }
 
+
     public List<Call> generateCallList(List<Subscriber> subscriberList,
-                                       int numOfCalls,
-                                       Date startsOfReport,
-                                       Date finishOfReport){
+                                       LocalDate startsOfReport,
+                                       LocalDate finishOfReport){
 
         List<Call> callList = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < numOfCalls; i++){
+        for (int i = 0; i < random.nextInt(MAXNUMOFCALLS); i++){
             Call call = new Call();
             call.setCallType(CallType.values()[random.nextInt(CallType.values().length)]);
 
@@ -37,15 +41,20 @@ public class Generator {
         return callList;
     }
 
-    public long randomBetweenDates(Date startInclusive, Date endExclusive) {
-        long startMillis = startInclusive.getTime();
-        long endMillis = endExclusive.getTime();
+    public long randomBetweenDates(LocalDate startInclusive, LocalDate endExclusive) {
+        long startMillis = startInclusive.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
+        long endMillis = endExclusive.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
         return  ThreadLocalRandom
                 .current()
                 .nextLong(startMillis, endMillis);
     }
 
     public long randomCallsEnd(long callsStartTime){
-        return new Random().nextLong(maxCallTime)+ callsStartTime;
+        return new Random().nextLong(MAXCALLTIME)+ callsStartTime;
+
     }
+
+
+
+
 }
