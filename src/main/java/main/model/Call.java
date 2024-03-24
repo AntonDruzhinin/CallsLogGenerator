@@ -1,28 +1,33 @@
 package main.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import main.repositories.CallRepository;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.util.Arrays;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "CDR")
-public class Call {
+public class Call implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private long number;
+
+//    private String number;
     @Column(name = "start_time")
-    private Timestamp startCallTime;
+    private Long startCallTime;
     @Column(name = "finish_time")
-    private Timestamp endCallTime;
-    @Enumerated(EnumType.ORDINAL)
+    private Long endCallTime;
+    @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum('INCOMINGCALL', 'OUTCOMMINGCALL')", name = "call_type")
     private CallType callType;
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private Subscriber subscriber;
 
-    public Call getCall(Abonent abonent){
-        Call call = new Call();
-        return call;
-    }
+
 }
