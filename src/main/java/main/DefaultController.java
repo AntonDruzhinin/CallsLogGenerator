@@ -47,7 +47,7 @@ public class DefaultController {
         List<Call> callList = generator.generateCallList(readSubsrciberList, STARTSOFREPORT, FINISHOFREPORT);
 
         callRepository.saveAll(callList);
-        System.out.println(callList.get(15).getCallTime());
+        System.out.println(callList.size());
 
         CDR cdr = new CDR();
         cdr.CDRToFile(callList, path);
@@ -56,6 +56,7 @@ public class DefaultController {
         Map<Integer, List <Call>> readCallMap= cdrParser.getCallMap();
 
         UDRGenerator udrGenerator  = new UDRGenerator(readCallMap);
+        udrGenerator.generateReport();
 
 
 

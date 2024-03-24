@@ -48,10 +48,8 @@ public class Call implements Serializable {
         return monthNum;
     }
 
-    public LocalTime getCallTime(){
-        Instant instant = Instant.ofEpochSecond(startCallTime - endCallTime);
-        LocalTime localTime = LocalTime.ofInstant(instant, ZoneId.systemDefault());
-        return localTime;
+    public Long getCallTime(){
+        return endCallTime - startCallTime;
     }
 
 }

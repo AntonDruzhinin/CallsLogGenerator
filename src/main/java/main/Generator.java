@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Generator {
-    private final long MAXCALLTIME = 500000;
+    private final long MAXCALLTIME = 5000;
     private final int MAXNUMOFCALLS = 10000;
     public  List<Subscriber> generateSubscriberList(int numOfSubscribers){
         List<Subscriber> subscriberList = new ArrayList<>();
