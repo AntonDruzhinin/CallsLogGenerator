@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,21 +22,29 @@ public class UDRGenerator {
     public void generateReport(){
         for (Integer month : callsPerMonth.keySet()){
             List<Call> calls = callsPerMonth.get(month);
-            Map<Subscriber, TotalTime> incTotalTime;
-            Map<Subscriber, >
+            Map<Subscriber, TotalTime> totalTimePerSub = new HashMap<>();
+            for (Subscriber subscriber : totalTimePerSub.keySet()){
+
+                try {
+                    FileWriter writer = new FileWriter(PATH  + subscriber.getNumber() + "_" + month + ".json");
+                    writer.write(new String());
+                    writer.close();
+
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+
+
+
 
         }
 
 
 
-        try {
-            FileWriter writer = new FileWriter(PATH  + Subscriber + "_" + month + ".json");
-            writer.write(stringBuilder.toString());
-            writer.close();
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
     }
 //
