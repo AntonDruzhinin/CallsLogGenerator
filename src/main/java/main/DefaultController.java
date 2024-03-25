@@ -64,7 +64,8 @@ public class DefaultController {
         Map<Integer, List <Call>> readCallMap= cdrParser.getCallMap();
 
         UDRGenerator udrGenerator  = new UDRGenerator(readCallMap, cdrParser.getSubscriberList());
-        udrGenerator.generateReport();
+       // udrGenerator.generateReport();
+        udrGenerator.generateReport(subscribers.get(5), 5);
 
     }
 
