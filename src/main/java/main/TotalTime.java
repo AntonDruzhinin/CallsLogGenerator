@@ -2,18 +2,13 @@ package main;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import main.model.Call;
 import main.model.CallType;
-
-import java.sql.Time;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
+
 
 @Getter
 @Setter
