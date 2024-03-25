@@ -3,7 +3,6 @@ package main;
 import main.model.Call;
 import main.model.CallType;
 import main.model.Subscriber;
-
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -22,10 +21,10 @@ public class Generator {
      * @param numOfSubscribers колличество абонентов
      * @return the list
      */
-    public  List<Subscriber> generateSubscriberList(int numOfSubscribers){
+    public List<Subscriber> generateSubscriberList(int numOfSubscribers) {
         List<Subscriber> subscriberList = new ArrayList<>();
-        for(int i = 0; i < numOfSubscribers; i++){
-            Long number= new Random().nextLong(79999999999L - 79000000000L  + 1) + 79000000000L;
+        for (int i = 0; i < numOfSubscribers; i++) {
+            Long number = new Random().nextLong(79999999999L - 79000000000L + 1) + 79000000000L;
             subscriberList.add(new Subscriber(number.toString()));
         }
         return subscriberList;
@@ -42,14 +41,13 @@ public class Generator {
      */
     public List<Call> generateCallList(List<Subscriber> subscriberList,
                                        LocalDate startsOfReport,
-                                       LocalDate finishOfReport){
+                                       LocalDate finishOfReport) {
 
         List<Call> callList = new ArrayList<>();
         Random random = new Random();
-        for (int i = 0; i < random.nextInt(MAXNUMOFCALLS); i++){
+        for (int i = 0; i < random.nextInt(MAXNUMOFCALLS); i++) {
             Call call = new Call();
             call.setCallType(CallType.values()[random.nextInt(CallType.values().length)]);
-
             call.setSubscriber(subscriberList.get(random.nextInt(subscriberList.size())));
             long callsStart = randomBetweenDates(startsOfReport, finishOfReport);
             call.setStartCallTime(callsStart);
@@ -69,7 +67,7 @@ public class Generator {
     public long randomBetweenDates(LocalDate startInclusive, LocalDate endExclusive) {
         long startMillis = startInclusive.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
         long endMillis = endExclusive.atStartOfDay(ZoneId.systemDefault()).toEpochSecond();
-        return  ThreadLocalRandom
+        return ThreadLocalRandom
                 .current()
                 .nextLong(startMillis, endMillis);
     }
@@ -80,12 +78,10 @@ public class Generator {
      * @param callsStartTime время начала вызова
      * @return the long
      */
-    public long randomCallsEnd(long callsStartTime){
-        return new Random().nextLong(MAXCALLTIME)+ callsStartTime;
+    public long randomCallsEnd(long callsStartTime) {
+        return new Random().nextLong(MAXCALLTIME) + callsStartTime;
 
     }
-
-
 
 
 }

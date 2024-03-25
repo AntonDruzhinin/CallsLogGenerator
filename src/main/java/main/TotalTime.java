@@ -21,38 +21,36 @@ public class TotalTime {
     private LocalTime outcomingCallTime;
 
     @JsonIgnore
-    private  long incoming;
+    private long incoming;
     @JsonIgnore
     private transient long outcoming;
 
 
-//    public TotalTime(Long incoming, Long outcoming) {
-//        this.incoming = incoming;
-//        this.outcoming = outcoming;
-//    }
-    private void addInc(long callTime){
-        incoming+=callTime;
+    private void addInc(long callTime) {
+        incoming += callTime;
     }
-    private void addOutc(long callTime){
+
+    private void addOutc(long callTime) {
         outcoming += callTime;
     }
 
-    public void timeCollector(Call call){
-        if (msisdn.equals("")){
+    public void timeCollector(Call call) {
+        if (msisdn.equals("")) {
             msisdn = call.getSubscriber().getNumber();
         }
-        if(call.getCallType().equals(CallType.INCOMINGCALL)){
+        if (call.getCallType().equals(CallType.INCOMINGCALL)) {
             addInc(call.getCallTime());
         }
-        if(call.getCallType().equals(CallType.OUTCOMMINGCALL)){
+        if (call.getCallType().equals(CallType.OUTCOMMINGCALL)) {
             addOutc(call.getCallTime());
         }
     }
-    public void convertTime(){
+
+    public void convertTime() {
 
         Instant instantInc = Instant.ofEpochSecond(incoming);
         Instant instantOutc = Instant.ofEpochSecond(outcoming);
-        incomingCallTime =LocalTime.ofInstant(instantInc, ZoneId.of("+00:00:00"));
+        incomingCallTime = LocalTime.ofInstant(instantInc, ZoneId.of("+00:00:00"));
         outcomingCallTime = LocalTime.ofInstant(instantOutc, ZoneId.of("+00:00:00"));
     }
 

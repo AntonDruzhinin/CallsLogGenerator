@@ -29,9 +29,10 @@ public class CDRParser {
     }
 
     private Map<Integer, List<String>> filesMap = new HashMap<>();
+
     private void parseCRDfile() throws IOException {
-        File[] files =new File(path).listFiles();
-        for(File file : files){
+        File[] files = new File(path).listFiles();
+        for (File file : files) {
             int month = Integer.parseInt(file.getName().split("\\.")[0]);
             List<String> lines = Files.readAllLines(Paths.get(file.getPath()));
             filesMap.put(month, lines);
@@ -44,38 +45,34 @@ public class CDRParser {
      *
      * @return the map
      */
-    public Map<Integer, List <Call>> getCallMap(){
+    public Map<Integer, List<Call>> getCallMap() {
         try {
             parseCRDfile();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Map<Integer, List <Call>> readCallList= new HashMap<>();
-
-        for (Integer month : filesMap.keySet()){
+        Map<Integer, List<Call>> readCallList = new HashMap<>();
+        for (Integer month : filesMap.keySet()) {
             List<Call> callList = new ArrayList<>();
             List<String> lines = filesMap.get(month);
-
             lines.forEach(line -> {
-                    String[] nodes = line.split(", ");
-                    Call call = new Call();
-                    call.setCallType(CallType.values()[Integer.parseInt(nodes[0])-1]);
-                    Subscriber subscriber = new Subscriber("");
-                    for (Subscriber s:subscriberList){
-                        if(s.getNumber().equals(nodes[1])){
-                            subscriber = s;
-                        }
-
+                String[] nodes = line.split(", ");
+                Call call = new Call();
+                call.setCallType(CallType.values()[Integer.parseInt(nodes[0]) - 1]);
+                Subscriber subscriber = new Subscriber("");
+                for (Subscriber s : subscriberList) {
+                    if (s.getNumber().equals(nodes[1])) {
+                        subscriber = s;
                     }
-                    if(subscriber.getNumber().equals("")){
-                        subscriber = new Subscriber(nodes[1]);
-                        subscriberList.add(subscriber);
-                    }
-
-                    call.setSubscriber(subscriber);
-                    call.setStartCallTime(Long.parseLong(nodes[2]));
-                    call.setEndCallTime(Long.parseLong(nodes[3]));
-                    callList.add(call);
+                }
+                if (subscriber.getNumber().equals("")) {
+                    subscriber = new Subscriber(nodes[1]);
+                    subscriberList.add(subscriber);
+                }
+                call.setSubscriber(subscriber);
+                call.setStartCallTime(Long.parseLong(nodes[2]));
+                call.setEndCallTime(Long.parseLong(nodes[3]));
+                callList.add(call);
 
             });
             readCallList.put(month, callList);

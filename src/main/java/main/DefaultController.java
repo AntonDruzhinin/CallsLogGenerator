@@ -6,7 +6,6 @@ import main.repositories.CallRepository;
 import main.repositories.SubscriberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,8 @@ import java.util.Map;
 @Controller
 public class DefaultController {
     private static final String path = "src/main/resources/";
-    private static final LocalDate STARTSOFREPORT =LocalDate.of(2023, 01, 01);
-    private static final LocalDate FINISHOFREPORT =LocalDate.of(2024, 01, 01);
+    private static final LocalDate STARTSOFREPORT = LocalDate.of(2023, 01, 01);
+    private static final LocalDate FINISHOFREPORT = LocalDate.of(2024, 01, 01);
 
     private static final int numOfSubscribers = 15;
     @Autowired
@@ -42,10 +41,10 @@ public class DefaultController {
     /**
      * Run.
      */
-    public void run(){
+    public void run() {
 
         Generator generator = new Generator();
-        List<Subscriber> subscribers =generator.generateSubscriberList(numOfSubscribers);
+        List<Subscriber> subscribers = generator.generateSubscriberList(numOfSubscribers);
         subscriberRepository.saveAll(subscribers);
         System.out.println("Subscribers add in DataBase: " + subscriberRepository.count());
 
@@ -61,11 +60,11 @@ public class DefaultController {
         cdr.CDRToFile(callList, path);
 
         CDRParser cdrParser = new CDRParser(path);
-        Map<Integer, List <Call>> readCallMap= cdrParser.getCallMap();
+        Map<Integer, List<Call>> readCallMap = cdrParser.getCallMap();
 
-        UDRGenerator udrGenerator  = new UDRGenerator(readCallMap, cdrParser.getSubscriberList());
-       // udrGenerator.generateReport();
-        udrGenerator.generateReport(subscribers.get(5), 5);
+        UDRGenerator udrGenerator = new UDRGenerator(readCallMap, cdrParser.getSubscriberList());
+        udrGenerator.generateReport();
+//        udrGenerator.generateReport(subscribers.get(5), 5);
 
     }
 
