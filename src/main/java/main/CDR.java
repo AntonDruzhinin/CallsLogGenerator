@@ -12,7 +12,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-
+/**
+ * Класс для записи звоков в CDR.txt по месяцам
+ */
 public class CDR {
     public void CDRToFile(List<Call> callList, String path){;
 

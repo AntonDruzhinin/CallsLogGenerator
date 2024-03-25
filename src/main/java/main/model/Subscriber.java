@@ -2,11 +2,11 @@ package main.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
+/**
+ * Класс абонента
+ */
 @Entity
 @Table(name = "subscribers")
 @Getter
@@ -20,12 +20,14 @@ public class Subscriber implements Serializable {
     @Column(name = "number")
     private String number;
 
+    /**
+     * Instantiates a new Subscriber.
+     *
+     * @param number -номер абонента
+     */
     public Subscriber(String number) {
         this.number = number;
     }
-//
-//    @OneToMany(mappedBy = "subscriber",cascade = CascadeType.ALL, orphanRemoval = true)
-//
-//    private List<Call> calls = new ArrayList<>();
+
 
 }

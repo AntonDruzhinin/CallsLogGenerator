@@ -12,6 +12,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * Класс вызова.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,6 +36,11 @@ public class Call implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Subscriber subscriber;
 
+    /**
+     * Метод для записи звонков в .txt файл
+     *
+     * @return the string
+     */
     public String stringToCDR(){
         StringBuilder str = new StringBuilder("0");
         str.append(Integer.toString(callType.ordinal()+1) + ", ");
@@ -42,12 +50,22 @@ public class Call implements Serializable {
         return str.toString();
     }
 
+    /**
+     * Метод для определения месяца, в котором был совершен звонок
+     *
+     * @return the int
+     */
     public int numOfMonth(){
         Instant instant = Instant.ofEpochSecond(startCallTime);
         int monthNum = LocalDate.ofInstant(instant,ZoneId.systemDefault()).getMonthValue();
         return monthNum;
     }
 
+    /**
+     * Метод для получения продолжительности вызова
+     *
+     * @return the long
+     */
     public Long getCallTime(){
         return endCallTime - startCallTime;
     }
